@@ -26,3 +26,41 @@ export function createElement(name, props = {}, ...children) {
 
   return element;
 }
+
+/**
+ * Генерация случайного и уникального кода для элемента списка
+ * @param list {Object} передаваемый список записей
+ * @returns {number}
+ */
+export function generateCode(list) {
+  const listLength = list.length;
+
+  let randomCode = Math.floor(Math.random() * (listLength + 2));
+
+  if (!randomCode || list.some(item => item.code === randomCode)) {
+    randomCode = generateCode(list);
+  }
+
+  return randomCode;
+}
+
+/**
+ * Генерация генерация выделенного заголовка
+ * @param title {string} основной заголовок
+ * @param count {number} число выделенного элемента
+ * @returns {string}
+ */
+export function generateSelectedTitle(title, count) {
+  let ending = count % 100;
+
+  if (ending >= 12 && ending <= 14) {
+    return `${title} | Выделяли ${count} раз`;
+  }
+
+  ending = count % 10;
+  if (ending >= 2 &&  ending <= 4) {
+    return `${title} | Выделяли ${count} раза`;
+  }
+
+  return `${title} | Выделяли ${count} раз`;
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import {createElement} from './utils.js';
+import { createElement, generateSelectedTitle } from './utils.js';
 import './styles.css';
 
 /**
@@ -24,9 +24,14 @@ function App({store}) {
           list.map(item =>
             <div key={item.code} className='List-item'>
               <div className={'Item' + (item.selected ? ' Item_selected' : '')}
-                   onClick={() => store.selectItem(item.code)}>
+                   onClick={() => {
+                       store.selectItem(item.code);
+                       store.getNumberOfSelectedItems(item.code, item.selected);
+                   }}>
                 <div className='Item-code'>{item.code}</div>
-                <div className='Item-title'>{item.title}</div>
+                <div className='Item-title'>
+                    {item.count ? generateSelectedTitle(item.title, item.count) : item.title}
+                </div>
                 <div className='Item-actions'>
                   <button onClick={() => store.deleteItem(item.code)}>
                     Удалить
