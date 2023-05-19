@@ -2,20 +2,34 @@ import React from "react";
 import PropTypes from 'prop-types';
 import './style.css';
 
-function Controls({onAdd}){
+
+
+function Controls({list, setModalActive}){
   return (
     <div className='Controls'>
-      <button onClick={() => onAdd()}>Добавить</button>
+      <div className="Controls-cart">
+        В корзине:&nbsp;
+        <span className="Controls-info">
+          {list.length ? (
+            list.length + ' товара' + ' / ' + list.reduce((sum, item) => sum + item.price * item.count, 0) + ' ₽'
+          ) : 'пусто'}
+        </span>
+      </div>
+      <button onClick={() => setModalActive(true)}>Перейти</button>
     </div>
   )
 }
 
 Controls.propTypes = {
-  onAdd: PropTypes.func
+  list: PropTypes.arrayOf(PropTypes.shape({
+    price: PropTypes.number,
+    count: PropTypes.number
+  })),
+  setModalActive: PropTypes.func
 };
 
 Controls.defaultProps = {
-  onAdd: () => {}
+  setModalActive: () => {}
 }
 
 export default React.memo(Controls);
