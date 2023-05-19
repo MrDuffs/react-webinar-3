@@ -51,6 +51,47 @@ class Store {
   };
 
   /**
+   * Добавление записи в корзину
+   * @param code
+   */
+  addItemToCart(code) {
+    this.setState({
+      ...this.state,
+      cartList: this.state.cartList.find(item => item.code === code) ? (
+          this.state.cartList.map(item => {
+            if (item.code === code) {
+              return {
+                ...item,
+                count: ++item.count,
+              };
+            }
+
+            return item;
+          })
+      ) : (
+          [
+              ...this.state.cartList,
+            {
+              ...this.state.list.find(item => item.code === code),
+              count: 1
+            }
+          ]
+      ),
+    })
+  };
+
+  /**
+   * Удаление записи из корзины по коду
+   * @param code
+   */
+  deleteItemFromCart(code) {
+    this.setState({
+      ...this.state,
+      cartList: this.state.cartList.filter(item => item.code !== code)
+    })
+  };
+
+  /**
    * Удаление записи по коду
    * @param code
    */
