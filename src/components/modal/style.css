@@ -1,0 +1,41 @@
+.Modal {
+    height: 100vh;
+    width: 100vw;
+    background: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.5s;
+}
+
+.Modal.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.Modal-content {
+    width: 960px;
+    overflow: hidden;
+    background: #FFFFFF;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+}
+
+.Modal-total {
+    margin: 20px 120px 90px 0;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 21px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.Modal-total span {
+    margin-left: 53px;
+}
