@@ -1,6 +1,6 @@
 .Item {
   display: flex;
-  justify-content: flex-start;
+  justify-content: start;
   transition: background-color 1s;
 }
 
@@ -16,6 +16,22 @@
 .Item-title {
   width: 100%;
   padding: 20px 10px;
+}
+
+.Item-price {
+  width: 15%;
+  padding: 20px 14px 20px 0;
+  font-size: 18px;
+  line-height: 21px;
+  text-align: end;
+}
+
+.Item-count {
+  width: 7%;
+  padding: 20px 14px 20px 42px;
+  font-size: 18px;
+  line-height: 21px;
+  text-align: end;
 }
 
 .Item-actions {
