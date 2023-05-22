@@ -17,6 +17,11 @@ export function plural(value, variants = {}, locale = 'ru-RU') {
 }
 
 /**
+ * Объект для форматирования цен
+ */
+export const priceFormatter = new Intl.NumberFormat('ru-RU');
+
+/**
  * Генератор чисел с шагом 1
  * Вариант с замыканием на начальное значение в самовызываемой функции.
  * @returns {Number}

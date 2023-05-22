@@ -12,3 +12,7 @@
   margin: 0;
   /*padding: 20px 20px 10px;*/
 }
+
+.Head button {
+  padding: 3px 12px;
+}

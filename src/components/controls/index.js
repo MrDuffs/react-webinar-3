@@ -1,17 +1,20 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import './style.css';
+import { plural, priceFormatter } from '../../utils';
 
 
 
-function Controls({list, setModalActive}){
+function Controls({totalCartItems, totalItemsPrice, setModalActive}){
   return (
     <div className='Controls'>
       <div className="Controls-cart">
         В корзине:&nbsp;
         <span className="Controls-info">
-          {list.length ? (
-            list.length + ' товара' + ' / ' + list.reduce((sum, item) => sum + item.price * item.count, 0) + ' ₽'
+          {totalCartItems ? (
+              totalCartItems
+              + ` ${plural(totalCartItems, {one: 'товар', few: 'товара', many: 'товаров'})}`
+              + ' / ' + priceFormatter.format(totalItemsPrice) + ' ₽'
           ) : 'пусто'}
         </span>
       </div>

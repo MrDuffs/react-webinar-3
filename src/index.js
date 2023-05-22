@@ -16,7 +16,7 @@ const store = new Store({
   ],
   cartList: [
     {code: 1, title: 'Название товара', price: 100.0, count: 1},
-    {code: 2, title: 'Книга про React', price: 770, count: 2}
+    {code: 2, title: 'Книга про React', price: 770, count: 2},
   ]
 });
 

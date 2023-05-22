@@ -13,8 +13,13 @@ import PageLayout from "./components/page-layout";
 function App({store}) {
   const [modalActive, setModalActive] = useState(false);
 
-  const list = store.getState().list;
-  const cartList = store.getState().cartList;
+  if (modalActive) {
+    document.body.style.overflowY = 'hidden';
+  } else {
+    document.body.style.overflowY = '';
+  }
+
+  const {list, cartList, totalCartItems, totalItemsPrice} = store.getState();
 
   const callbacks = {
     onDeleteItem: useCallback((code) => {
@@ -37,12 +42,20 @@ function App({store}) {
   return (
     <PageLayout>
       <Head title='Магазин'/>
-      <Controls list={cartList} setModalActive={setModalActive}/>
-      <List list={list}
-            onAddItemToCart={callbacks.onAddItemToCart}
+      <Controls
+          totalCartItems={totalCartItems}
+          totalItemsPrice={totalItemsPrice}
+          setModalActive={setModalActive}
       />
-      <Modal cartList={cartList} active={modalActive}>
-        <Head title='Корзина' active={modalActive} setActive={setModalActive}/>
+      <List
+          list={list}
+          onAddItemToCart={callbacks.onAddItemToCart}
+      />
+      <Modal totalItemsPrice={totalItemsPrice} active={modalActive}>
+        <Head
+            title='Корзина'
+            active={modalActive}
+            setActive={setModalActive}/>
         <List
             list={cartList}
             onDeleteItemFromCart={callbacks.onDeleteItemFromCart}

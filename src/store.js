@@ -6,6 +6,8 @@ import {generateCode} from "./utils";
 class Store {
   constructor(initState = {}) {
     this.state = initState;
+    this.state.totalCartItems = this.state.cartList.length;
+    this.state.totalItemsPrice = this.state.cartList.reduce((sum, item) => sum + item.price * item.count, 0);
     this.listeners = []; // Слушатели изменений состояния
   }
 
@@ -55,29 +57,38 @@ class Store {
    * @param code
    */
   addItemToCart(code) {
-    this.setState({
-      ...this.state,
-      cartList: this.state.cartList.find(item => item.code === code) ? (
-          this.state.cartList.map(item => {
-            if (item.code === code) {
-              return {
-                ...item,
-                count: ++item.count,
-              };
-            }
+    const listItem = this.state.list.find(item => item.code === code);
+    const cartItem = this.state.cartList.find(item => item.code === code);
 
-            return item;
-          })
-      ) : (
-          [
-              ...this.state.cartList,
-            {
-              ...this.state.list.find(item => item.code === code),
-              count: 1
-            }
-          ]
-      ),
-    })
+    if (cartItem) {
+      this.setState({
+        ...this.state,
+        cartList: this.state.cartList.map(item => {
+          if (item.code === code) {
+            return {
+              ...item,
+              count: item.count + 1,
+            };
+          }
+
+          return item;
+        })
+      })
+    } else {
+      this.setState({
+        ...this.state,
+        cartList: [
+          ...this.state.cartList,
+          {
+            ...listItem,
+            count: 1
+          }
+        ]
+      })
+    }
+
+    this.calculateTotalPrice();
+    this.updateTotalCartItems();
   };
 
   /**
@@ -89,7 +100,29 @@ class Store {
       ...this.state,
       cartList: this.state.cartList.filter(item => item.code !== code)
     })
+    this.calculateTotalPrice();
+    this.updateTotalCartItems();
   };
+
+  /**
+   * Подсчет суммы товаров в корзине
+   */
+  calculateTotalPrice() {
+    this.setState({
+      ...this.state,
+      totalItemsPrice: this.state.cartList.reduce((sum, item) => sum + item.price * item.count, 0),
+    })
+  };
+
+  /**
+   * Обновление кол-ва товаров в корзине
+   */
+  updateTotalCartItems() {
+    this.setState({
+      ...this.state,
+      totalCartItems: this.state.cartList.length,
+    })
+  }
 
   /**
    * Удаление записи по коду

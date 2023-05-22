@@ -1,6 +1,7 @@
 .Item {
+  padding: 20px 20px 16px;
   display: flex;
-  justify-content: start;
+  justify-content: space-between;
   transition: background-color 1s;
 }
 
@@ -10,32 +11,35 @@
 }
 
 .Item-code {
-  padding: 20px 10px 20px 20px;
+  padding-right: 20px;
 }
 
 .Item-title {
-  width: 100%;
-  padding: 20px 10px;
+  width: 70%;
 }
 
 .Item-price {
   width: 15%;
-  padding: 20px 14px 20px 0;
+  padding-right: 24px;
   font-size: 18px;
   line-height: 21px;
   text-align: end;
 }
 
 .Item-count {
-  width: 7%;
-  padding: 20px 14px 20px 42px;
+  width: 10%;
+  padding-right: 24px;
   font-size: 18px;
   line-height: 21px;
   text-align: end;
 }
 
-.Item-actions {
+.Item-buttons {
   display: flex;
   justify-content: flex-end;
-  padding: 20px 20px 20px 10px;
+  /*padding: 20px 20px 20px 10px;*/
+}
+
+.Item-buttons .delete {
+  padding: 3px 11px;
 }
