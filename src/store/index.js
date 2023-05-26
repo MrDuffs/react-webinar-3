@@ -11,6 +11,7 @@ class Store {
     /** @type {{
      * basket: Basket,
      * catalog: Catalog,
+     * product: Product,
      * modals: Modals
      * }} */
     this.actions = {};
@@ -35,7 +36,7 @@ class Store {
 
   /**
    * Выбор состояния
-   * @returns {{basket: Object, catalog: Object, modals: Object}}
+   * @returns {{basket: Object, catalog: Object, product: Object, modals: Object}}
    */
   getState() {
     return this.state;
