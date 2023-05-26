@@ -1,0 +1,31 @@
+.ProductInfo {
+    padding: 23px 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 20px;
+}
+
+.ProductInfo-description {
+
+}
+
+.ProductInfo-madeIn {
+
+}
+
+.ProductInfo-category {
+
+}
+
+.ProductInfo-date {
+
+}
+
+.ProductInfo-price {
+
+}
+
+.ProductInfo button {
+
+}
