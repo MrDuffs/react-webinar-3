@@ -12,12 +12,12 @@
 
 .Pagination-item {
     padding: 1px;
-    min-width: 18px;
-    min-height: 18px;
-    text-align: center;
-    font-size: 16px;
-    line-height: 18px;
+    min-width: 20px;
+    min-height: 20px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .Pagination-item:hover {
