@@ -19,6 +19,19 @@
   padding: 20px 10px;
 }
 
+.Item-title a {
+  color: #000;
+  text-decoration-line: none;
+}
+
+.Item-title a:hover {
+  text-decoration-line: underline;
+}
+
+.Item-title a:active {
+  color: #a43030;
+}
+
 .Item-actions {
   padding: 20px 20px 20px 10px;
   display: flex;

@@ -15,6 +15,19 @@
   padding: 20px 10px;
 }
 
+.ItemBasket-title a {
+  color: #000;
+  text-decoration-line: none;
+}
+
+.ItemBasket-title a:hover {
+  text-decoration-line: underline;
+}
+
+.ItemBasket-title a:active {
+  color: #a43030;
+}
+
 .ItemBasket-right {
   padding: 20px 20px 20px 10px;
   display: flex;
