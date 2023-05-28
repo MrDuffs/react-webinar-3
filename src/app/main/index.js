@@ -32,12 +32,14 @@ function Main() {
     // Открытие модалки корзины
     openModalBasket: useCallback(() => store.actions.modals.open('basket'), [store]),
     // Смена страницы
-    changePage: useCallback((page) => store.actions.catalog.changePage(page), [store])
+    changePage: useCallback((page) => store.actions.catalog.changePage(page), [store]),
+    // Получение ссылки для товара
+    getRoute: useCallback((uniqueAddress) => `/product/${uniqueAddress}`, [])
   }
 
   const renders = {
     item: useCallback((item) => {
-      return <Item item={item} onAdd={callbacks.addToBasket} route={`/product/${item._id}`}/>
+      return <Item item={item} onAdd={callbacks.addToBasket} route={callbacks.getRoute(item._id)}/>
     }, [callbacks.addToBasket]),
   };
 
