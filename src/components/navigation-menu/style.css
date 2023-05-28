@@ -1,0 +1,16 @@
+.Navigation {
+
+}
+
+.Navigation-links {
+
+}
+
+.Navigation-link {
+    font-size: 18px;
+    color: #0087E9;
+}
+
+.Navigation-link:hover {
+    color: #3ea1e8;
+}
