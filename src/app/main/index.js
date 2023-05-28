@@ -7,6 +7,8 @@ import List from "../../components/list";
 import useStore from "../../store/use-store";
 import useSelector from "../../store/use-selector";
 import Pagination from '../../components/pagination';
+import NavigationMenu from '../../components/navigation-menu';
+import HeaderContainer from '../../components/header-container';
 
 function Main() {
 
@@ -42,12 +44,14 @@ function Main() {
   return (
     <PageLayout>
       <Head title='Магазин'/>
-      <BasketTool
-          onOpen={callbacks.openModalBasket}
-          amount={select.amount}
-          sum={select.sum}
-          onChangePage={callbacks.changePage}
-      />
+      <HeaderContainer>
+        <NavigationMenu onChangePage={callbacks.changePage} />
+        <BasketTool
+            onOpen={callbacks.openModalBasket}
+            amount={select.amount}
+            sum={select.sum}
+        />
+      </HeaderContainer>
       <List list={select.list} renderItem={renders.item}/>
       <Pagination
         currentPage={select.currentPage}

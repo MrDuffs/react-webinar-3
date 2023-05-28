@@ -7,6 +7,8 @@ import useSelector from '../../store/use-selector';
 import ProductInfo from '../../components/product-info';
 import { useParams } from 'react-router-dom';
 import Loader from '../../components/loader';
+import NavigationMenu from '../../components/navigation-menu';
+import HeaderContainer from '../../components/header-container';
 
 function Product() {
   const [isLoading, setIsLoading] = useState(true);
@@ -51,12 +53,14 @@ function Product() {
   return (
     <PageLayout>
       <Head title={isLoading ? 'Загрузка...' : select.item.title} />
-      <BasketTool
-        onOpen={callbacks.openModalBasket}
-        amount={select.amount}
-        sum={select.sum}
-        onChangePage={callbacks.changePage}
-      />
+      <HeaderContainer>
+        <NavigationMenu onChangePage={callbacks.changePage} />
+        <BasketTool
+            onOpen={callbacks.openModalBasket}
+            amount={select.amount}
+            sum={select.sum}
+        />
+      </HeaderContainer>
       {isLoading
         ? <Loader />
         : <ProductInfo item={select.item} onAdd={callbacks.addToBasket}/>
