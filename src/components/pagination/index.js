@@ -1,10 +1,10 @@
 import { memo } from 'react';
 import { cn as bem } from '@bem-react/classname';
-import { DOTS, usePagination } from './usePagination';
 import './style.css';
+import { DOTS, createPaginationPages } from '../../utils';
 
 function Pagination({currentPage, totalPages, onChangePage}) {
-  const paginationRange = usePagination({totalPages, currentPage});
+  const paginationRange = createPaginationPages(totalPages, currentPage);
 
   const cn = bem('Pagination');
 
@@ -17,13 +17,13 @@ function Pagination({currentPage, totalPages, onChangePage}) {
           }
 
           return (
-              <li
-                  key={index}
-                  className={pageNumber === currentPage ? cn('item') + ' active' : cn('item')}
-                  onClick={pageNumber !== currentPage ? () => onChangePage(pageNumber) : undefined}
-              >
-                {pageNumber}
-              </li>
+            <li
+                key={index}
+                className={pageNumber === currentPage ? cn('item') + ' active' : cn('item')}
+                onClick={pageNumber !== currentPage ? () => onChangePage(pageNumber) : undefined}
+            >
+              {pageNumber}
+            </li>
           );
         })}
       </div>
