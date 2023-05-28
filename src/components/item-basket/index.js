@@ -11,14 +11,15 @@ function ItemBasket(props) {
   const cn = bem('ItemBasket');
 
   const callbacks = {
-    onRemove: () => props.onRemove(props.item._id)
+    onRemove: () => props.onRemove(props.item._id),
+    onClose: () => props.onClose(),
   };
 
   return (
     <div className={cn()}>
       {/*<div className={cn('code')}>{props.item._id}</div>*/}
       <div className={cn('title')}>
-        <Link to={`/product/${props.item._id}`}>{props.item.title}</Link>
+        <Link to={`/product/${props.item._id}`} onClick={callbacks.onClose} >{props.item.title}</Link>
       </div>
       <div className={cn('right')}>
         <div className={cn('cell')}>{numberFormat(props.item.price)} ₽</div>
@@ -37,10 +38,12 @@ ItemBasket.propTypes = {
     amount: PropTypes.number
   }).isRequired,
   onRemove: propTypes.func,
+  onClose: PropTypes.func
 }
 
 ItemBasket.defaultProps = {
   onRemove: () => {},
+  onClose: () => {}
 }
 
 export default memo(ItemBasket);
