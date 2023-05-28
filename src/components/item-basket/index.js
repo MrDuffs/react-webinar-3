@@ -19,7 +19,11 @@ function ItemBasket(props) {
     <div className={cn()}>
       {/*<div className={cn('code')}>{props.item._id}</div>*/}
       <div className={cn('title')}>
-        <Link to={`/product/${props.item._id}`} onClick={callbacks.onClose} >{props.item.title}</Link>
+        {props.route
+            ? <Link to={props.route} onClick={callbacks.onClose}>
+                {props.item.title}
+              </Link>
+            : props.item.title}
       </div>
       <div className={cn('right')}>
         <div className={cn('cell')}>{numberFormat(props.item.price)} ₽</div>
@@ -38,7 +42,8 @@ ItemBasket.propTypes = {
     amount: PropTypes.number
   }).isRequired,
   onRemove: propTypes.func,
-  onClose: PropTypes.func
+  onClose: PropTypes.func,
+  route: PropTypes.string
 }
 
 ItemBasket.defaultProps = {
