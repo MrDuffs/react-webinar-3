@@ -12,10 +12,6 @@ function Main() {
 
   const store = useStore();
 
-  useEffect(() => {
-    store.actions.catalog.load();
-  }, []);
-
   const select = useSelector(state => ({
     list: state.catalog.list,
     currentPage: state.catalog.currentPage,
@@ -24,13 +20,17 @@ function Main() {
     sum: state.basket.sum
   }));
 
+  useEffect(() => {
+    store.actions.catalog.load();
+  }, [select.currentPage]);
+
   const callbacks = {
     // Добавление в корзину
     addToBasket: useCallback(_id => store.actions.basket.addToBasket(_id), [store]),
     // Открытие модалки корзины
     openModalBasket: useCallback(() => store.actions.modals.open('basket'), [store]),
-    // Подгрузка новых данных при смене страницы
-    changePage: useCallback((page) => store.actions.catalog.load(page), [])
+    // Смена страницы
+    changePage: useCallback((page) => store.actions.catalog.changePage(page), [store])
   }
 
   const renders = {
@@ -42,8 +42,12 @@ function Main() {
   return (
     <PageLayout>
       <Head title='Магазин'/>
-      <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount}
-                  sum={select.sum}/>
+      <BasketTool
+          onOpen={callbacks.openModalBasket}
+          amount={select.amount}
+          sum={select.sum}
+          onChangePage={callbacks.changePage}
+      />
       <List list={select.list} renderItem={renders.item}/>
       <Pagination
         currentPage={select.currentPage}

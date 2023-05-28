@@ -16,6 +16,9 @@ class Catalog extends StoreModule {
   }
 
   async load(page) {
+    if (page === this.getState().currentPage) {
+      return null;
+    }
     const currentPage = page ? page : this.getState().currentPage;
     const skip = (currentPage - 1) *  10;
 
@@ -24,9 +27,15 @@ class Catalog extends StoreModule {
     this.setState({
       ...this.getState(),
       list: json.result.items,
-      currentPage: currentPage,
       totalPages: Math.ceil(json.result.count / 10)
     }, 'Загружены товары из АПИ');
+  }
+
+  changePage(page) {
+    this.setState({
+      ...this.getState(),
+      currentPage: page
+    });
   }
 }
 

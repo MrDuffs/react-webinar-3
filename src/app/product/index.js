@@ -28,7 +28,7 @@ function Product() {
     item: state.product.item,
     amount: state.basket.amount,
     sum: state.basket.sum,
-    modal: state.modals.name
+    modal: state.modals.name,
   }));
 
   useEffect(() => {
@@ -44,6 +44,8 @@ function Product() {
     openModalBasket: useCallback(() => store.actions.modals.open('basket'), [store]),
     // Закрытие модалки
     closeModal: useCallback(() => store.actions.modals.close(), [store]),
+    // Смена страницы
+    changePage: useCallback((page) => store.actions.catalog.changePage(page), [store])
   };
 
   return (
@@ -53,6 +55,7 @@ function Product() {
         onOpen={callbacks.openModalBasket}
         amount={select.amount}
         sum={select.sum}
+        onChangePage={callbacks.changePage}
       />
       {isLoading
         ? <Loader />
