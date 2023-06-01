@@ -12,6 +12,7 @@ class CatalogState extends StoreModule {
   initState() {
     return {
       list: [],
+      categories: [],
       params: {
         page: 1,
         limit: 10,
@@ -36,6 +37,7 @@ class CatalogState extends StoreModule {
     if (urlParams.has('limit')) validParams.limit = Math.min(Number(urlParams.get('limit')) || 10, 50);
     if (urlParams.has('sort')) validParams.sort = urlParams.get('sort');
     if (urlParams.has('query')) validParams.query = urlParams.get('query');
+    if (urlParams.has('category')) validParams.category = urlParams.get('category');
     await this.setParams({...this.initState().params, ...validParams, ...newParams}, true);
   }
 
@@ -84,14 +86,28 @@ class CatalogState extends StoreModule {
       'search[query]': params.query
     };
 
-    const response = await fetch(`/api/v1/articles?${new URLSearchParams(apiParams)}`);
+    if (params.category) apiParams['search[category]'] = params.category;
+
+    const response = await  fetch(`/api/v1/articles?${new URLSearchParams(apiParams)}`);
     const json = await response.json();
+
+    let fetchedCategories;
+    if (!this.getState().categories.length) fetchedCategories = await this.fetchCategories();
+
     this.setState({
       ...this.getState(),
       list: json.result.items,
       count: json.result.count,
+      categories: fetchedCategories ? fetchedCategories.items : this.getState().categories,
       waiting: false
     }, 'Загружен список товаров из АПИ');
+  }
+
+  async fetchCategories() {
+    const response = await fetch(`/api/v1/categories?fields=_id,title,parent(_id)&limit=*`);
+    const json = await response.json();
+
+    return json.result;
   }
 }
 
