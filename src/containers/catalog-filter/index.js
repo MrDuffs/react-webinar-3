@@ -36,10 +36,11 @@ function CatalogFilter() {
       {value: '-price', title: 'Сначала дорогие'},
       {value: 'edition', title: 'Древние'},
     ]), []),
-    categories: useMemo(() => ([ {value: '', title: 'Все'}, ...getOptionsList(select.categories)] ), [select.categories])
+    categories: useMemo(() => ([
+        {value: '', title: 'Все'},
+      ...getOptionsList(select.categories)]
+    ), [select.categories])
   };
-
-  console.log(options.categories);
 
   const {t} = useTranslate();
 
