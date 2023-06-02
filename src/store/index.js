@@ -13,6 +13,7 @@ class Store {
      * catalog: CatalogState,
      * modals: ModalsState,
      * article: ArticleState,
+     * login: LoginState,
      * locale: LocaleState
      * }} */
     this.actions = {};
@@ -42,6 +43,7 @@ class Store {
    * catalog: Object,
    * modals: Object,
    * article: Object,
+   * login: Object,
    * locale: Object
    * }}
    */
