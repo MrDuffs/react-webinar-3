@@ -17,7 +17,8 @@ class CatalogState extends StoreModule {
         page: 1,
         limit: 10,
         sort: 'order',
-        query: ''
+        query: '',
+        category: ''
       },
       count: 0,
       waiting: false
@@ -88,11 +89,11 @@ class CatalogState extends StoreModule {
 
     if (params.category) apiParams['search[category]'] = params.category;
 
-    const response = await  fetch(`/api/v1/articles?${new URLSearchParams(apiParams)}`);
-    const json = await response.json();
-
     let fetchedCategories;
     if (!this.getState().categories.length) fetchedCategories = await this.fetchCategories();
+
+    const response = await  fetch(`/api/v1/articles?${new URLSearchParams(apiParams)}`);
+    const json = await response.json();
 
     this.setState({
       ...this.getState(),
