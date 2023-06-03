@@ -28,6 +28,21 @@
   padding: 20px;
 }
 
+.SideLayout_padding_px10_py15 {
+  padding: 10px 15px;
+}
+
+.SideLayout_border {
+  border: 1px solid #DCDCDC;
+}
+.SideLayout_border_bottom {
+  margin: 0;
+  border-bottom: 1px solid #DCDCDC;
+}
+.SideLayout_border_top {
+  border-top: 1px solid #DCDCDC;
+}
+
 .SideLayout-item {
   margin: 0 5px;
 }
