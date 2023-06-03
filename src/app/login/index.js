@@ -5,7 +5,7 @@ import useTranslate from '../../hooks/use-translate';
 import LocaleSelect from '../../containers/locale-select';
 import Navigation from '../../containers/navigation';
 import LoginForm from '../../components/login-form';
-import AuthBar from '../../components/auth-bar';
+import AuthBar from '../../containers/auth-bar';
 import useStore from '../../hooks/use-store';
 import useSelector from '../../hooks/use-selector';
 
@@ -18,6 +18,7 @@ function Login() {
   }));
 
   const callbacks = {
+    // Авторизация
     onSubmit:  useCallback((login, password) => store.actions.login.logIn(login, password), [store]),
   };
 
@@ -25,12 +26,12 @@ function Login() {
 
   return (
     <PageLayout>
-      <AuthBar />
+      <AuthBar/>
       <Head title={t('title')}>
         <LocaleSelect/>
       </Head>
       <Navigation />
-      <LoginForm error={select.error} onSubmit={callbacks.onSubmit}/>
+      <LoginForm error={select.error} onSubmit={callbacks.onSubmit} t={t}/>
     </PageLayout>
   );
 }

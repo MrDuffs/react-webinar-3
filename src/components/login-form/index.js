@@ -1,9 +1,10 @@
 import { memo } from 'react';
 import { cn as bem } from '@bem-react/classname';
 import Input from '../input';
+import PropTypes from 'prop-types';
 import './style.css';
 
-function LoginForm({error, onSubmit}) {
+function LoginForm({error, onSubmit, t}) {
 
   const cn = bem('LoginForm');
 
@@ -15,19 +16,32 @@ function LoginForm({error, onSubmit}) {
 
   return (
       <form className={cn()} onSubmit={handleSubmit}>
-        <div className={cn('title')}>Вход</div>
-        <div className={cn('login')}>
-          <div className={cn('label')}>Логин</div>
+        <div className={cn('title')}>{t('login.title')}</div>
+        <div className={cn('prop')}>
+          <div className={cn('label')}>{t('login.login')}</div>
           <Input value='' />
         </div>
-        <div className={cn('password')}>
-          <div className={cn('label')}>Пароль</div>
+        <div className={cn('prop')}>
+          <div className={cn('label')}>{t('login.password')}</div>
           <Input value=''/>
         </div>
-        <button type='submit'>Войти</button>
-        {error ? <div className={cn('error')}>{error}</div> : null}
+        {error ?
+          <div className={cn('prop')}>
+            <div className={cn('error')}>{error}</div>
+          </div>
+        : null}
+        <button type='submit'>{t('login.submit')}</button>
       </form>
   );
+}
+
+LoginForm.propTypes = {
+  error: PropTypes.string,
+  onSubmit: PropTypes.func
+};
+
+LoginForm.defaultProps = {
+  t: (text) => text
 }
 
 export default memo(LoginForm);
