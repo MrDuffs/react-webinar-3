@@ -1,0 +1,16 @@
+.AuthMenu {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 20px;
+}
+
+.AuthMenu-profile-link {
+    font-size: 13px;
+    line-height: 15px;
+    color: #0087E9;
+}
+
+.AuthMenu button {
+    cursor: pointer;
+}
