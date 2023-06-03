@@ -1,4 +1,4 @@
-import {memo} from 'react';
+import { memo } from 'react';
 import useStore from "../../hooks/use-store";
 import useTranslate from "../../hooks/use-translate";
 import useInit from "../../hooks/use-init";
@@ -8,6 +8,7 @@ import Head from "../../components/head";
 import CatalogFilter from "../../containers/catalog-filter";
 import CatalogList from "../../containers/catalog-list";
 import LocaleSelect from "../../containers/locale-select";
+import AuthBar from '../../containers/auth-bar';
 
 function Main() {
 
@@ -21,6 +22,7 @@ function Main() {
 
   return (
     <PageLayout>
+      <AuthBar/>
       <Head title={t('title')}>
         <LocaleSelect/>
       </Head>
