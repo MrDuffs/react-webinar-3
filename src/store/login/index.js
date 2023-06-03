@@ -10,6 +10,7 @@ class LoginState extends StoreModule {
    */
   initState() {
     return {
+      userData: null,
       error: '',
       waiting: false
     }
@@ -22,7 +23,7 @@ class LoginState extends StoreModule {
     });
 
     try {
-      const response = await fetch('/api/v1//users/self', {
+      const response = await fetch('/api/v1//users/self?fields=_id,email,profile', {
         headers: {
           "X-Token": localStorage.getItem('token')
         }
@@ -31,20 +32,26 @@ class LoginState extends StoreModule {
 
       this.setState({
         ...this.getState(),
-        data: json.result,
+        userData: json.result,
+        error: '',
         waiting: false
-      }, 'Загружен пользователь из АПИ');
+      }, 'Пользователь авторизован');
 
     } catch (err) {
       this.setState({
-        data: {},
+        userData: {},
         error: err,
         waiting: false
-      }, 'Ошибка при загрузке пользователя');
+      }, 'Ошибка при авторизации пользователя');
     }
   }
 
   async logIn(login, password) {
+    this.setState({
+      ...this.getState(),
+      waiting: true
+    });
+
     try {
       if (!login || !password) throw new Error('Отсутствует логин или пароль');
 
@@ -56,24 +63,62 @@ class LoginState extends StoreModule {
         body: JSON.stringify({login, password})
       });
 
-      console.log(response);
+      const json = await response.json();
 
-      // if (!response.ok) throw new Error('Введены неправильные данные');
+      if (json.error?.code === 'Validation') throw new Error('Введены неправильные логин или пароль');
 
-      const { result } = await response.json();
+      if (json.result?.token) {
+        localStorage.setItem('token', json.result.token);
+      }
 
-      if (result?.token) {
-        localStorage.setItem('token', result.token);
-        await this.loadUser();
+      this.setState({
+        ...this.getState(),
+        userData: json.result.user,
+        waiting: false
+      }, 'Успешная авторизация пользователя');
+
+    } catch (err) {
+      this.setState({
+        ...this.getState(),
+        error: err.message,
+        waiting: false
+      }, 'Ошибка запроса');
+    }
+  }
+
+  async logOut() {
+    this.setState({
+      ...this.getState(),
+      waiting: true
+    });
+
+    try {
+      const response = await fetch('/api/v1//users/sign', {
+        method: 'DELETE',
+        headers: {
+          "X-Token": localStorage.getItem('token')
+        }
+      });
+      const json = await response.json();
+
+      if (json.result) {
+        localStorage.removeItem('token');
+
+        this.setState({
+          ...this.getState(),
+          userData: null,
+          waiting: false
+        }, 'Выход пользователя из аккаунта');
+      } else {
+        throw new Error('Произошла ошибка');
       }
 
     } catch (err) {
-      console.log('Error');
-      console.log(err.message);
-      // this.setState({
-      //   ...this.getState(),
-      //   error: err.message
-      // });
+      this.setState({
+        ...this.getState(),
+        error: err.message,
+        waiting: false
+      }, 'Ошибка запроса');
     }
   }
 }
