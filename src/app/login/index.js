@@ -14,7 +14,8 @@ function Login() {
   const store = useStore();
 
   const select = useSelector(state => ({
-    error: state.login.error
+    error: state.login.error,
+    waiting: state.login.waiting
   }));
 
   const callbacks = {
@@ -31,7 +32,7 @@ function Login() {
         <LocaleSelect/>
       </Head>
       <Navigation />
-      <LoginForm error={select.error} onSubmit={callbacks.onSubmit} t={t}/>
+      <LoginForm error={select.error} onSubmit={callbacks.onSubmit} waiting={select.waiting} t={t}/>
     </PageLayout>
   );
 }

@@ -1,17 +1,20 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import { cn as bem } from '@bem-react/classname';
 import Input from '../input';
 import PropTypes from 'prop-types';
 import './style.css';
+import Spinner from '../spinner';
 
-function LoginForm({error, onSubmit, t}) {
+function LoginForm({error, onSubmit, waiting, t}) {
+
+  const [loginValue, setLoginValue] = useState('');
+  const [passwordValue, setPasswordValue] = useState('');
 
   const cn = bem('LoginForm');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const [login, password] = e.target;
-    onSubmit(login.value, password.value);
+    onSubmit(loginValue, passwordValue);
   };
 
   return (
@@ -19,25 +22,28 @@ function LoginForm({error, onSubmit, t}) {
         <div className={cn('title')}>{t('login.title')}</div>
         <div className={cn('prop')}>
           <div className={cn('label')}>{t('login.login')}</div>
-          <Input value='' />
+          <Input value={loginValue} onChange={setLoginValue}/>
         </div>
         <div className={cn('prop')}>
           <div className={cn('label')}>{t('login.password')}</div>
-          <Input value=''/>
+          <Input value={passwordValue} onChange={setPasswordValue}/>
         </div>
-        {error ?
-          <div className={cn('prop')}>
-            <div className={cn('error')}>{error}</div>
-          </div>
-        : null}
-        <button type='submit'>{t('login.submit')}</button>
+        <Spinner active={waiting}>
+          {error ?
+              <div className={cn('prop')}>
+                <div className={cn('error')}>{error}</div>
+              </div>
+              : null}
+          <button type='submit'>{t('login.submit')}</button>
+        </Spinner>
       </form>
   );
 }
 
 LoginForm.propTypes = {
   error: PropTypes.string,
-  onSubmit: PropTypes.func
+  onSubmit: PropTypes.func,
+  waiting: PropTypes.bool
 };
 
 LoginForm.defaultProps = {
