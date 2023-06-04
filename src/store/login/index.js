@@ -53,7 +53,6 @@ class LoginState extends StoreModule {
     });
 
     try {
-      if (!login || !password) throw new Error('Отсутствует логин или пароль');
 
       const response = await fetch('/api/v1//users/sign', {
         method: 'POST',
@@ -65,7 +64,11 @@ class LoginState extends StoreModule {
 
       const json = await response.json();
 
-      if (json.error?.code === 'Validation') throw new Error('Введены неправильные логин или пароль');
+      if (json.error) {
+        json.error.data.issues.forEach(error => {
+          if (!error.path.length) throw new Error(error.message);
+        });
+      }
 
       if (json.result?.token) {
         localStorage.setItem('token', json.result.token);
