@@ -15,7 +15,7 @@ function CatalogFilter() {
     sort: state.catalog.params.sort,
     query: state.catalog.params.query,
     category: state.catalog.params.category,
-    categories: createTreeFromList(state.catalog.categories)
+    categories: createTreeFromList(state.categories.categories)
   }));
 
   const callbacks = {

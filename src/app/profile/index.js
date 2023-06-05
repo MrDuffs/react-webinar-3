@@ -12,11 +12,13 @@ import ProfileCard from '../../components/profile-card';
 function Profile() {
 
   const select = useSelector(state => ({
-    userData: state.login.userData,
-    waiting: state.login.waiting
+    userData: state.profile.userData,
+    waitingUser: state.profile.waiting
   }));
 
   const {t} = useTranslate();
+
+  console.log(select.userData);
 
   return (
       <PageLayout>
@@ -25,7 +27,7 @@ function Profile() {
           <LocaleSelect/>
         </Head>
         <Navigation />
-        <Spinner active={select.waiting}>
+        <Spinner active={select.waitingUser}>
           <ProfileCard user={select.userData} t={t}/>
         </Spinner>
       </PageLayout>

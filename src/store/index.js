@@ -11,9 +11,11 @@ class Store {
     /** @type {{
      * basket: BasketState,
      * catalog: CatalogState,
+     * categories: CategoriesState,
      * modals: ModalsState,
      * article: ArticleState,
      * login: LoginState,
+     * profile: ProfileState,
      * locale: LocaleState
      * }} */
     this.actions = {};
@@ -41,9 +43,11 @@ class Store {
    * @returns {{
    * basket: Object,
    * catalog: Object,
+   * categories: Object,
    * modals: Object,
    * article: Object,
    * login: Object,
+   * profile: Object,
    * locale: Object
    * }}
    */

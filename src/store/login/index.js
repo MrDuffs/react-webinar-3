@@ -10,37 +10,54 @@ class LoginState extends StoreModule {
    */
   initState() {
     return {
-      userData: null,
+      userName: '',
+      isAuth: false,
       error: '',
       waiting: false
     }
   }
 
-  async loadUser() {
+  setError(error) {
+    this.setState({
+      ...this.getState(),
+      error: error
+    });
+  }
+
+  async checkAuth() {
     this.setState({
       ...this.getState(),
       waiting: true
     });
 
     try {
-      const response = await fetch('/api/v1//users/self?fields=_id,email,profile', {
+      const response = await fetch('/api/v1//users/self?fields=_id,profile(name)', {
         headers: {
           "X-Token": localStorage.getItem('token')
         }
       });
       const json = await response.json();
 
+      if (json.error) {
+        json.error.data.issues.forEach(error => {
+          if (!error.path.length) throw new Error(error.message);
+        });
+      }
+
       this.setState({
         ...this.getState(),
-        userData: json.result,
+        userName: json.result.profile?.name,
+        isAuth: true,
         error: '',
         waiting: false
       }, 'Пользователь авторизован');
 
     } catch (err) {
+      console.log(err);
       this.setState({
-        userData: {},
-        error: err,
+        userName: '',
+        isAuth: false,
+        error: '',
         waiting: false
       }, 'Ошибка при авторизации пользователя');
     }
@@ -54,7 +71,7 @@ class LoginState extends StoreModule {
 
     try {
 
-      const response = await fetch('/api/v1//users/sign', {
+      const response = await fetch('/api/v1//users/sign?fields=_id,profile(name)', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -74,15 +91,21 @@ class LoginState extends StoreModule {
         localStorage.setItem('token', json.result.token);
       }
 
+      await this.store.actions.profile.loadUser();
+
       this.setState({
         ...this.getState(),
-        userData: json.result.user,
+        userName: json.result.user?.profile?.name,
+        isAuth: true,
+        error: '',
         waiting: false
       }, 'Успешная авторизация пользователя');
 
     } catch (err) {
       this.setState({
         ...this.getState(),
+        username: '',
+        isAuth: false,
         error: err.message,
         waiting: false
       }, 'Ошибка запроса');
@@ -109,7 +132,8 @@ class LoginState extends StoreModule {
 
         this.setState({
           ...this.getState(),
-          userData: null,
+          userName: '',
+          isAuth: false,
           waiting: false
         }, 'Выход пользователя из аккаунта');
       } else {

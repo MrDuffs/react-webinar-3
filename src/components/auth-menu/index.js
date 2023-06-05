@@ -4,20 +4,18 @@ import { cn as bem } from '@bem-react/classname';
 import PropTypes from 'prop-types';
 import './style.css';
 
-function AuthMenu({user, onLogOut, t}) {
+function AuthMenu({userName, onLogOut, t}) {
   const cn = bem('AuthMenu');
 
   return (
       <div className={cn()}>
-        {user
+        {userName
             ? (
                 <>
                   <Link className={cn('profile-link')} to='/profile'>
-                    {user.profile?.name}
+                    {userName}
                   </Link>
-                  <Link to='/'>
-                    <button className={cn('logOut')} onClick={onLogOut}>{t('auth.logOut')}</button>
-                  </Link>
+                  <button className={cn('logOut')} onClick={onLogOut}>{t('auth.logOut')}</button>
                 </>
             ) : (
                 <Link to='/login'>
@@ -30,11 +28,7 @@ function AuthMenu({user, onLogOut, t}) {
 }
 
 AuthMenu.propTypes = {
-  user: PropTypes.shape({
-    _id: PropTypes.string,
-    email: PropTypes.string,
-    profile: PropTypes.object
-  }),
+  userName: PropTypes.string,
   logOut: PropTypes.func,
   t: PropTypes.func
 };
