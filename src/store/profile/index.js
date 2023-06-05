@@ -8,7 +8,6 @@ class ProfileState extends StoreModule {
   initState() {
     return {
       userData: null,
-      isAuth: false,
       error: '',
       waiting: false
     }
@@ -35,7 +34,6 @@ class ProfileState extends StoreModule {
       this.setState({
         ...this.getState(),
         userData: json.result,
-        isAuth: true,
         error: '',
         waiting: false
       }, 'Пользователь авторизован');
@@ -43,7 +41,6 @@ class ProfileState extends StoreModule {
     } catch (err) {
       this.setState({
         userData: null,
-        isAuth: false,
         error: err,
         waiting: false
       }, 'Ошибка при авторизации пользователя');
@@ -53,7 +50,6 @@ class ProfileState extends StoreModule {
   async removeUser() {
     this.setState({
       userData: null,
-      isAuth: false,
       error: "",
     });
   }

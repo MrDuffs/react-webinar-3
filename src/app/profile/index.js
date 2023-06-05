@@ -8,8 +8,16 @@ import Navigation from '../../containers/navigation';
 import useTranslate from '../../hooks/use-translate';
 import Spinner from '../../components/spinner';
 import ProfileCard from '../../components/profile-card';
+import useInit from '../../hooks/use-init';
+import useStore from '../../hooks/use-store';
 
 function Profile() {
+
+  const store = useStore();
+
+  useInit(() => {
+    store.actions.profile.loadUser();
+  }, [], true);
 
   const select = useSelector(state => ({
     userData: state.profile.userData,
@@ -28,7 +36,7 @@ function Profile() {
         </Head>
         <Navigation />
         <Spinner active={select.waitingUser}>
-          <ProfileCard user={select.userData} t={t}/>
+          {select.userData ? <ProfileCard user={select.userData} t={t}/> : null}
         </Spinner>
       </PageLayout>
   );
