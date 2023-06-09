@@ -1,0 +1,18 @@
+.CommentsLogin {
+    font-size: 16px;
+    line-height: 18px;
+}
+
+.CommentsLogin-link {
+    color: #0087E9;
+}
+
+.CommentsLogin-cancel {
+    color: #666666;
+    font-size: 16px;
+    line-height: 18px;
+    background: transparent;
+    border: none;
+    text-decoration-line: underline;
+    cursor: pointer;
+}
