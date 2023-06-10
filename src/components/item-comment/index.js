@@ -4,6 +4,7 @@ import dateFormat from '../../utils/date-format';
 import './style.css';
 import CommentsForm from '../comments-form';
 import CommentsLogin from '../comments-login';
+import PropTypes from 'prop-types';
 
 function ItemComment(
     {
@@ -16,6 +17,7 @@ function ItemComment(
       onSubmitComment
     }
 ) {
+
   const cn = bem('ItemComment');
 
   return (
@@ -35,22 +37,27 @@ function ItemComment(
         >
           Ответить
         </button>
-        { exactCommentId === item._id &&
-            (
-              isAuth
-                ? <CommentsForm
-                    onChange={onChangeComment}
-                    onSubmit={onSubmitComment}
-                  />
-                : <CommentsLogin
-                    exactCommentId={exactCommentId}
-                    onCancel={onChangeCommentId}
-                  />
-            )
+        {exactCommentId === item._id &&
+          (
+            isAuth
+              ? <CommentsForm
+                  id={item._id}
+                  onChange={onChangeComment}
+                  onSubmitComment={onSubmitComment}
+                  exactCommentId={exactCommentId}
+                  onCancel={onChangeCommentId}
+                />
+              : <CommentsLogin
+                  exactCommentId={exactCommentId}
+                  onCancel={onChangeCommentId}
+                />
+          )
         }
-        {item.children.length > 0
-          && (
-            <div className={item.parent._tree.length < 10 ? cn('reply') : ''}>
+        {item.children.length > 0 &&
+          (
+            <div
+                className={item.parent._tree.length < 10 ? cn('reply') : cn('reply_last')}
+            >
               {item.children.map((childComment) => (
                 <ItemComment
                     key={childComment._id}
@@ -59,6 +66,8 @@ function ItemComment(
                     userId={userId}
                     exactCommentId={exactCommentId}
                     onChangeCommentId={onChangeCommentId}
+                    onChangeComment={onChangeComment}
+                    onSubmitComment={onSubmitComment}
                 />
               ))}
             </div>
@@ -66,6 +75,36 @@ function ItemComment(
         }
       </div>
   );
+}
+
+ItemComment.propTypes = {
+  item: PropTypes.shape({
+    _id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    text: PropTypes.string,
+    author: PropTypes.shape({
+      _id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      profile: PropTypes.shape({
+        name: PropTypes.string
+      })
+    }),
+    parent: PropTypes.shape({
+      _tree: PropTypes.array
+    }),
+    dateCreate: PropTypes.string,
+    children: PropTypes.array
+  }).isRequired,
+  isAuth: PropTypes.bool,
+  userId: PropTypes.string,
+  exactCommentId: PropTypes.string,
+  onChangeCommentId: PropTypes.func,
+  onChangeComment: PropTypes.func,
+  onSubmitComment: PropTypes.func
+};
+
+ItemComment.defaultProps = {
+  onChangeCommentId: () => {},
+  onChangeComment: () => {},
+  onSubmitComment: () => {}
 }
 
 export default memo(ItemComment);

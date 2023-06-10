@@ -1,8 +1,8 @@
 .CommentsForm {
     width: 100%;
+    margin-top: 30px;
     display: flex;
     flex-direction: column;
-    align-items: start;
     gap: 10px;
 }
 
@@ -13,8 +13,6 @@
 }
 
 .CommentsForm-textarea {
-    /*max-width: 100%;*/
-    width: 100%;
     min-height: 76px;
     padding: 5px;
     font-family: 'Arial', sans-serif;
@@ -28,6 +26,13 @@
 }
 
 .CommentsForm button {
+    align-self: start;
     font-size: 13px;
     line-height: 15px;
+}
+
+.CommentsForm-button-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }

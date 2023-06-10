@@ -17,4 +17,27 @@ export default {
       }
     }
   },
+
+  post: (text, parent) => {
+    return async (dispatch, getState, services) => {
+      dispatch({type: 'comments/post-start'});
+
+      try {
+        const res = await services.api.request({
+          url: `api/v1/comments?fields=*,author(profile)`,
+          method: 'POST',
+          body: JSON.stringify({
+            text,
+            parent: parent
+          })
+        });
+        // Комментарий загружен успешно
+        dispatch({type: 'comments/post-success', payload: {data: res.data.result}});
+
+      } catch (e) {
+        //Ошибка загрузки
+        dispatch({type: 'comments/post-error'});
+      }
+    }
+  }
 }

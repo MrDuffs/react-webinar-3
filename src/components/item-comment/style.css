@@ -1,9 +1,13 @@
 .ItemComment {
-    width: 100%;
+    margin-top: 30px;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: start;
-    gap: 10px;
+}
+
+.ItemComment:first-child {
+    margin: 0;
 }
 
 .ItemComment-header {
@@ -19,7 +23,10 @@
 }
 
 .ItemComment-author_active {
-
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 14px;
+    color: #666666;
 }
 
 .ItemComment-date {
@@ -29,8 +36,10 @@
 }
 
 .ItemComment-text {
+    margin: 10px 0;
     font-size: 14px;
     line-height: 16px;
+    word-break: break-word;
 }
 
 .ItemComment-button-reply {
@@ -47,12 +56,17 @@
 }
 
 .ItemComment-reply {
-    /*width: 100%;*/
+    width: 100%;
+    box-sizing: border-box;
     padding: 30px 0 0 30px;
     display: flex;
     flex-direction: column;
-    gap: 30px;
-    /*overflow-wrap: break-word;*/
-    word-break: break-all;
 }
 
+.ItemComment-reply_last {
+    width: 100%;
+    margin-top: 30px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}

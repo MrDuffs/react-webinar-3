@@ -1,15 +1,13 @@
 .CommentList {
-    padding: 30px 40px 90px;
-}
-
-.CommentList-title {
-    margin-bottom: 25px;
-    font-size: 24px;
-    line-height: 28px;
+    box-sizing: border-box;
 }
 
 .CommentList-item {
     margin-bottom: 30px;
     display: flex;
     flex-direction: column;
+}
+
+.CommentList-item:last-child {
+    margin: 0;
 }

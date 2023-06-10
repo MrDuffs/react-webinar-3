@@ -5,12 +5,26 @@ import './style.css';
 
 function CommentsForm(props) {
   const [value, setValue] = useState(props.value);
+  const [isBelowComment] = useState(props.exactCommentId);
 
   // Обработчик изменений в поле
   const onHandleChange = (event) => {
     setValue(event.target.value);
     props.onChange(event.target.value);
   };
+
+  const onHandleSubmit = () => {
+    if (value) {
+      isBelowComment
+          ? props.onSubmitComment(value, {_id: props.id, _type: 'comment'})
+          : props.onSubmitComment(value, {_id: props.id, _type: 'article'})
+    }
+  };
+
+  const onHandleClick = () => {
+    props.onCancel('');
+    setValue('');
+  }
 
   // Обновление стейта, если передан новый value
   useLayoutEffect(() => setValue(props.value), [props.value]);
@@ -19,25 +33,34 @@ function CommentsForm(props) {
 
   return (
       <div className={cn()}>
-        <div className={cn('title')}>Новый комментарий</div>
+        <div className={cn('title')}>
+          {isBelowComment ? 'Новый ответ' : 'Новый комментарий'}
+        </div>
         <textarea
             className={cn('textarea')}
-            placeholder='Текст'
             value={value}
             onChange={onHandleChange}
         />
-        <button onClick={props.onSubmit}>Отправить</button>
+        <div className={cn('button-group')}>
+          <button onClick={onHandleSubmit}>Отправить</button>
+          {isBelowComment &&
+              <button onClick={onHandleClick}>Отмена</button>
+          }
+        </div>
       </div>
   );
 }
 
 CommentsForm.propTypes = {
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   value: PropTypes.string,
   onChange: PropTypes.func,
+  onSubmitComment: PropTypes.func
 }
 
 CommentsForm.defaultProps = {
   onChange: () => {},
+  onSubmitComment: () => {},
   value: ''
 }
 
