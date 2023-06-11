@@ -1,6 +1,6 @@
 import { memo, useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import useInit from '../../hooks/use-init';
 import commentsActions from '../../store-redux/comments/action';
 import { useSelector as useSelectorRedux } from 'react-redux/es/hooks/useSelector';
@@ -22,6 +22,8 @@ function CommentsSection() {
 
   // Параметры из пути /articles/:id
   const params = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useInit(async () => {
     await new Promise( () =>
@@ -53,6 +55,11 @@ function CommentsSection() {
       setExactCommentId(value);
     }, []),
 
+    // Переход к авторизации
+    onSignIn: useCallback(() => {
+      navigate('/login', {state: {back: location.pathname}});
+    }, [location.pathname]),
+
     onSubmit: useCallback((text, parent) => {
       dispatch(commentsActions.post(text, parent));
       setComment('');
@@ -78,6 +85,7 @@ function CommentsSection() {
             onChangeCommentId={callbacks.onCommentIdChange}
             onChangeComment={callbacks.onChange}
             onSubmitComment={callbacks.onSubmit}
+            onSignIn={callbacks.onSignIn}
         />
     ), [
       select.comments,
@@ -85,7 +93,8 @@ function CommentsSection() {
       exactCommentId,
       callbacks.onChangeCommentId,
       callbacks.onChange,
-      callbacks.onSubmit
+      callbacks.onSubmit,
+      callbacks.onSignIn
     ]),
   };
 
@@ -107,7 +116,7 @@ function CommentsSection() {
                   onChange={callbacks.onChange}
                   onSubmitComment={callbacks.onSubmit}
               />
-              : <CommentsLogin />
+              : <CommentsLogin onSignIn={callbacks.onSignIn}/>
             )
           }
         </Spinner>

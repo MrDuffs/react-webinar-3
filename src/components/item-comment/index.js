@@ -14,7 +14,8 @@ function ItemComment(
       exactCommentId,
       onChangeCommentId,
       onChangeComment,
-      onSubmitComment
+      onSubmitComment,
+      onSignIn
     }
 ) {
 
@@ -52,6 +53,7 @@ function ItemComment(
                     onChangeCommentId={onChangeCommentId}
                     onChangeComment={onChangeComment}
                     onSubmitComment={onSubmitComment}
+                    onSignIn={onSignIn}
                 />
               ))}
             </div>
@@ -69,9 +71,10 @@ function ItemComment(
                         padding='reply'
                     />
                     : <CommentsLogin
+                        padding='reply'
                         exactCommentId={exactCommentId}
                         onCancel={onChangeCommentId}
-                        padding='reply'
+                        onSignIn={onSignIn}
                     />
             )
         }
@@ -100,13 +103,15 @@ ItemComment.propTypes = {
   exactCommentId: PropTypes.string,
   onChangeCommentId: PropTypes.func,
   onChangeComment: PropTypes.func,
-  onSubmitComment: PropTypes.func
+  onSubmitComment: PropTypes.func,
+  onSignIn: PropTypes.func
 };
 
 ItemComment.defaultProps = {
   onChangeCommentId: () => {},
   onChangeComment: () => {},
-  onSubmitComment: () => {}
+  onSubmitComment: () => {},
+  onSignIn: () => {}
 }
 
 export default memo(ItemComment);

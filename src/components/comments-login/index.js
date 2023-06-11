@@ -1,6 +1,5 @@
 import { memo, useLayoutEffect, useState } from 'react';
 import { cn as bem } from '@bem-react/classname';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './style.css';
 
@@ -23,7 +22,7 @@ function CommentsLogin({padding, ...props}) {
         {isBelowComment
           ? (
             <>
-              <Link className={cn('link')} to={'/login'}>Войдите</Link>
+              <button className={cn('link')} onClick={props.onSignIn}>Войдите</button>
               , чтобы иметь возможность комментировать.
               <button
                   className={cn('cancel')}
@@ -34,7 +33,7 @@ function CommentsLogin({padding, ...props}) {
             </>
           ) : (
               <>
-                <Link className={cn('link')} to={'/login'}>Войдите</Link>
+                <button className={cn('link')} onClick={props.onSignIn}>Войдите</button>
                 , чтобы иметь возможность комментировать
               </>
             )
@@ -46,11 +45,13 @@ function CommentsLogin({padding, ...props}) {
 CommentsLogin.propTypes = {
   exactCommentId: PropTypes.string,
   onCancel: PropTypes.func,
+  onSignIn: PropTypes.func,
   padding: PropTypes.oneOf(['reply'])
 }
 
 CommentsLogin.defaultProps = {
   onCancel: () => {},
+  onSignIn: () => {},
   exactCommentId: ''
 }
 
