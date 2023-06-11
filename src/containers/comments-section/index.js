@@ -5,7 +5,6 @@ import useInit from '../../hooks/use-init';
 import commentsActions from '../../store-redux/comments/action';
 import { useSelector as useSelectorRedux } from 'react-redux/es/hooks/useSelector';
 import shallowequal from 'shallowequal';
-import { transformComments } from '../../utils/comments-list-to-tree';
 import Spinner from '../../components/spinner';
 import CommentsList from '../../components/comments-list';
 import ItemComment from '../../components/item-comment';
@@ -15,7 +14,6 @@ import Title from '../../components/title';
 import BlockLayout from '../../components/block-layout';
 import CommentsForm from '../../components/comments-form';
 import listToTree from '../../utils/list-to-tree';
-import treeToList from '../../utils/tree-to-list';
 
 function CommentsSection() {
   const dispatch = useDispatch();
@@ -68,9 +66,7 @@ function CommentsSection() {
 
     getCommentsList: useCallback(() => {
       if (select.comments.items) {
-        return treeToList(
-            listToTree(select.comments.items, 'article'), (item, level) => ({...item, level})
-        );
+        return listToTree(select.comments.items, 'article');
       }
     }, [select.comments])
   };
@@ -104,7 +100,7 @@ function CommentsSection() {
           <Title>Комментарии ({select.waiting ? '0' : select.count})</Title>
           {select.comments?.items?.length ? (
             <CommentsList
-              list={transformComments(select.comments.items)}
+              list={callbacks.getCommentsList()}
               renderItem={renders.item}
             />
           ) : null}
