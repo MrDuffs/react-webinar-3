@@ -3,7 +3,7 @@ import { cn as bem } from '@bem-react/classname';
 import PropTypes from 'prop-types';
 import './style.css';
 
-function CommentsForm({padding}, ...props) {
+function CommentsForm({padding, ...props}) {
   const [value, setValue] = useState(props.value);
   const [isBelowComment] = useState(props.exactCommentId);
 
