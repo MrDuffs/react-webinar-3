@@ -71,6 +71,7 @@ function ItemComment(
                     : <CommentsLogin
                         exactCommentId={exactCommentId}
                         onCancel={onChangeCommentId}
+                        padding='reply'
                     />
             )
         }

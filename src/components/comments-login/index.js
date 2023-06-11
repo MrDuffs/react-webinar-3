@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './style.css';
 
-function CommentsLogin(props) {
+function CommentsLogin({padding, ...props}) {
   const [isBelowComment, setIsBelowComment] = useState(props.exactCommentId);
 
   const onHandleClick = () => {
@@ -19,7 +19,7 @@ function CommentsLogin(props) {
   const cn = bem('CommentsLogin');
 
   return (
-      <div className={cn()}>
+      <div className={cn({padding})}>
         {isBelowComment
           ? (
             <>
@@ -45,7 +45,8 @@ function CommentsLogin(props) {
 
 CommentsLogin.propTypes = {
   exactCommentId: PropTypes.string,
-  onCancel: PropTypes.func
+  onCancel: PropTypes.func,
+  padding: PropTypes.oneOf(['reply'])
 }
 
 CommentsLogin.defaultProps = {

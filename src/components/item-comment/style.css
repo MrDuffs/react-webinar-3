@@ -71,6 +71,7 @@
     flex-direction: column;
 }
 
-.ItemComment-reply_last .CommentsForm_padding_reply {
+.ItemComment-reply_last .CommentsForm_padding_reply,
+.ItemComment-reply_last .CommentsLogin_padding_reply {
     padding-left: 0;
 }

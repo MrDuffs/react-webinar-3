@@ -4,6 +4,10 @@
     line-height: 18px;
 }
 
+.CommentsLogin_padding_reply {
+    padding-left: 30px;
+}
+
 .CommentsLogin-link {
     color: #0087E9;
 }
