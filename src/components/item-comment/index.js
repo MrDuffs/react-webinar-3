@@ -1,10 +1,10 @@
 import { memo } from 'react';
 import { cn as bem } from '@bem-react/classname';
 import dateFormat from '../../utils/date-format';
-import './style.css';
 import CommentsForm from '../comments-form';
 import CommentsLogin from '../comments-login';
 import PropTypes from 'prop-types';
+import './style.css';
 
 function ItemComment(
     {
@@ -37,22 +37,6 @@ function ItemComment(
         >
           Ответить
         </button>
-        {exactCommentId === item._id &&
-          (
-            isAuth
-              ? <CommentsForm
-                  id={item._id}
-                  onChange={onChangeComment}
-                  onSubmitComment={onSubmitComment}
-                  exactCommentId={exactCommentId}
-                  onCancel={onChangeCommentId}
-                />
-              : <CommentsLogin
-                  exactCommentId={exactCommentId}
-                  onCancel={onChangeCommentId}
-                />
-          )
-        }
         {item.children.length > 0 &&
           (
             <div
@@ -72,6 +56,23 @@ function ItemComment(
               ))}
             </div>
           )
+        }
+        {exactCommentId === item._id &&
+            (
+                isAuth
+                    ? <CommentsForm
+                        id={item._id}
+                        onChange={onChangeComment}
+                        onSubmitComment={onSubmitComment}
+                        exactCommentId={exactCommentId}
+                        onCancel={onChangeCommentId}
+                        padding='reply'
+                    />
+                    : <CommentsLogin
+                        exactCommentId={exactCommentId}
+                        onCancel={onChangeCommentId}
+                    />
+            )
         }
       </div>
   );

@@ -3,7 +3,7 @@ import { cn as bem } from '@bem-react/classname';
 import PropTypes from 'prop-types';
 import './style.css';
 
-function CommentsForm(props) {
+function CommentsForm({padding}, ...props) {
   const [value, setValue] = useState(props.value);
   const [isBelowComment] = useState(props.exactCommentId);
 
@@ -32,7 +32,7 @@ function CommentsForm(props) {
   const cn = bem('CommentsForm');
 
   return (
-      <div className={cn()}>
+      <div className={cn({padding})}>
         <div className={cn('title')}>
           {isBelowComment ? 'Новый ответ' : 'Новый комментарий'}
         </div>
@@ -55,7 +55,8 @@ CommentsForm.propTypes = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   value: PropTypes.string,
   onChange: PropTypes.func,
-  onSubmitComment: PropTypes.func
+  onSubmitComment: PropTypes.func,
+  padding: PropTypes.oneOf(['reply']),
 }
 
 CommentsForm.defaultProps = {

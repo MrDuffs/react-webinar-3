@@ -70,3 +70,7 @@
     display: flex;
     flex-direction: column;
 }
+
+.ItemComment-reply_last .CommentsForm_padding_reply {
+    padding-left: 0;
+}
